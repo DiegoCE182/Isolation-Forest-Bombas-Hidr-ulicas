@@ -5,7 +5,6 @@ from google.colab import files
 
 np.random.seed(39)
 
-# Parámetros de generación de datos
 Fecha_inicio = datetime(2024, 5, 20, 16, 0)
 Dias = 365
 Muestra_diaria = 60
@@ -15,7 +14,6 @@ Pico_max_normal = 4
 Rango_alto = (4.1, 6.3)
 Pico_min_alto = 4.05
 Pico_max_alto = 6.5
-
 
 def generate_daily_vibration_data(Fecha_inicio, Muestra_diaria, Rango_normal, Pico_min_normal, Pico_max_normal, Rango_alto, Pico_min_alto, Pico_max_alto):
     tiempo = []
@@ -45,7 +43,6 @@ for i in range(Dias):
     time_day, Vibracion_dia = generate_daily_vibration_data(Dia_inicio, Muestra_diaria, Rango_normal, Pico_min_normal, Pico_max_normal, Rango_alto, Pico_min_alto, Pico_max_alto)
     tiempo_total.extend(time_day)
     vibracion_total.extend(Vibracion_dia)
-
 
 for i in range(20400, 20500):
     vibracion_total[i] = max(vibracion_total[i], np.random.uniform(2.4,4.2))
