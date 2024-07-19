@@ -5,7 +5,6 @@ from google.colab import files
 
 np.random.seed(39)
 
-# Parámetros de generación de datos
 Fecha_inicio = datetime(2024, 5, 20, 16, 0)
 Dias = 365
 Muestra_diaria = 60
