@@ -1,0 +1,38 @@
+import pandas as pd
+import numpy as np
+from scipy.fft import fft
+from scipy.signal import find_peaks
+
+df = pd.read_csv('VS1.csv')
+
+vibration_data = df['vibration'].values
+
+def calculate_rms(data):
+    return np.sqrt(np.mean(data**2))
+
+def calculate_dominant_frequency(data, sampling_rate):
+    N = len(data)
+    T = 1.0 / sampling_rate
+    yf = fft(data)
+    xf = np.fft.fftfreq(N, T)[:N//2]
+    idx = np.argmax(2.0/N * np.abs(yf[:N//2]))
+    return xf[idx]
+
+def calculate_crest_factor(data):
+    peak_value = np.max(np.abs(data))
+    rms_value = calculate_rms(data)
+    return peak_value / rms_value
+
+sampling_rate = 1000  # Esto debe ajustarse a tu tasa de muestreo real
+
+rms_value = calculate_rms(vibration_data)
+dominant_frequency = calculate_dominant_frequency(vibration_data, sampling_rate)
+crest_factor = calculate_crest_factor(vibration_data)
+
+features_df = pd.DataFrame({
+    'RMS': [rms_value],
+    'Dominant_Frequency': [dominant_frequency],
+    'Crest_Factor': [crest_factor]
+})
+
+features_df.to_csv('extracted_features.csv', index=False)
